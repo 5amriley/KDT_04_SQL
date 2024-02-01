@@ -2,12 +2,12 @@
  * SQL 과제 #2
  */
 
+# sqlclass_db 데이터베이스에 제공된 nobel.csv 파일을 import 하여
+# 각각 nobel 테이블을 생성하고 아래 네용에 대해 쿼리를 작성하시오.
+
 use sqlclass_db;
 
 select * from nobel;
-
-# sqlclass_db 데이터베이스에 제공된 nobel.csv 파일을 import 하여
-# 각각 nobel 테이블을 생성하고 아래 네용에 대해 쿼리를 작성하시오.
 
 # 1) 1960년에 노벨 물리학상 또는 노벨 평화상을 수상한 사람의 정보를 출력
 # - 출력 컬럼 : year, category, fullname
@@ -52,13 +52,14 @@ from nobel
 group by category 
 order by count(*) desc;
 
-# 8) 노벨 의학상이 없었던 연도를 모두 출력 (distinct 사용)
+# 8) 노벨 의학상이 있었던 연도를 모두 출력 (distinct 사용)
 select distinct year from nobel 
-where year not in (select distinct year 
+where year in (select distinct year 
 					from nobel 
 					where category='Physiology or Medicine');
 
 # 9) 노벨 의학상이 없었던 연도의 총 횟수를 출력
+# [ 첫 번째 풀이 ]
 # [ criteria : 일부러 그룹화하려고 값을 동일하게 갖는 열을 추가한 것 ]
 select count(*) as "노벨 의학상이 없었던 년도의 총 횟수"
 from (select distinct year, 1 criteria from nobel 
@@ -67,6 +68,7 @@ where year not in (select distinct year
 					where category='Physiology or Medicine')) as sq
 group by sq.criteria;
 
+# [ 두 번째 풀이 ]
 select count(distinct year) as "노벨 의학상이 없었던 년도의 총 횟수"
 from nobel 
 where year not in (select year from nobel 
