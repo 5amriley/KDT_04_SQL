@@ -1,3 +1,7 @@
+/*
+ * 챕터 3
+ */
+
 use sakila;
 
 desc language;

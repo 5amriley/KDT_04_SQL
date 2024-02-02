@@ -96,13 +96,14 @@ where birth_continent not in ('Europe', 'North America', '');
 
 # 14) 수상자들의 출신 국가별로 그룹화를 해서 수상 횟수가 10회 이상인 국가의 모든 정보를 출력
 # 국가별 수상횟수의 역순으로 출력
-select birth_country, count(*) from nobel 
+select birth_country, count(*) as count from nobel 
 group by birth_country
-having count(*) >= 10;
+having count(*) >= 10
+order by count desc;
 
 # 15) 2회 이상 수상자 중에서 fullname 이 공백이 아닌 경우를 출력하는데, fullname 의 오름차순으로 출력
 # - 출력 컬럼 : fullname, 횟수
-select fullname, count(*) from nobel 
+select fullname, count(*) as count from nobel 
 where fullname != ''
 group by fullname
 having count(*) >= 2;
